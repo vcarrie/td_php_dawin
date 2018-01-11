@@ -1,32 +1,47 @@
 {% extends 'layout.html.twig' %}
 
 {% block header_title %}
-    Fiche produit "Nutella"
+    Fiche produit {{ nom }}
 {% endblock %}
 
 {% block contents %}
 <div class="row">
     <div class="col-sm-4">
-    <img src="{{ asset('theme/img/nutella.jpg') }}" />
+    <img src="{{ img }}" />
+        <p>
+            Ce produit a été consulté {{ nb_consult }} fois et sa moyenne est {{ average }}
+        </p>
+
     </div>
+
+
     <div class="col-sm-8">
-        <h3>Nutella</h3>
-        <h4>Code barre 3017620421006</h4>
+        <h3>{{ nom }}</h3>
+        <h4>Code barre {{ code_barre }}</h4>
         <hr />
         <p>
-            <b>Quantité:</b> 750g <br/>
+            <b>Quantité:</b> {{ quantite }} <br/>
         </p>
         <p>
             <b>Ingrédients:</b>
             <ul>
-                <li>Sucre</li>
-                <li>Huile de palme</li>
-                <li>noisettes 13%</li>
-                <li>cacao maigre 7,4%</li>
-                <li>lait écrémé en poudre 6,6%</li>
-                <li>lactosérum en poudre</li>
+                {% for ingredient in ingredients %}
+                    <li>{{ ingredient['text'] }}</li>
+                {% endfor %}
             </ul>
         </p>
+        {%  if (form_display)   %}
+        <form method="post" action="{{ path('evaluate') }}">
+            {{ form_widget(form.id_produit) }}
+            Note : {{ form_widget(form.note) }}
+            Commentaire : {{ form_widget(form.commentaire) }}
+            <input type="submit" class="btn btn-primary" value="Enregistrer" />
+            {{ form_end(form) }}
+        </form>
+
+        {%  endif   %}
+
+
     </div>
 </div>
 {% endblock %}
