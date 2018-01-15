@@ -24,7 +24,7 @@ class DefaultController extends Controller
 
         $contexte_doctrine = $this->getDoctrine()->getRepository(produit::class);
         $form = $this->createForm(CodeBarreType::class);
-        $products = $contexte_doctrine->findBy(array(), array('nbConsultations' => 'DESC'), 8);
+        $products = $contexte_doctrine->findBy(array(), array('dateDerniereVue' => 'DESC'), 8);
         $array_final_products = array();
         //$contexte_doctrine = $this->getDoctrine()->getManager();
 
